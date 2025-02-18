@@ -1,31 +1,38 @@
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.BufferedReader;
+import java.util.ArrayList;
 import java.util.StringTokenizer;
+import java.util.Arrays;
 
 public class Main {
 	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine(), " ");
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
-		int a = Integer.parseInt(st.nextToken());
-		int b = Integer.parseInt(st.nextToken());
-		// 최대 공약수 유클리드 호제법
-		// a*b = 최대공약수 * 최소공배수
-		int GCD = gcd(a, b);
-		int lcm = (a * b) / GCD;
-		System.out.println(GCD);
-		System.out.println(lcm);
-
-	}
-
-	public static int gcd(int a, int b) {
-		while (b != 0) {
-			int temp = a % b;
-			a = b;
-			b = temp;
-			gcd(a, b);
+		int n = Integer.parseInt(in.readLine());
+		int[][] arr = new int[n][2];
+		for (int i = 0; i < n; i++) {
+			StringTokenizer sb = new StringTokenizer(in.readLine());
+			for (int j = 0; j < 2; j++) {
+				arr[i][j] = Integer.parseInt(sb.nextToken());
+			}
 		}
-		return a;
+
+		System.out.println("null");
+		Arrays.sort(arr, (a, b) -> {
+			if (a[0] == b[0])
+				return a[1] - b[1];
+			return a[0] - b[0];
+		});
+
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < 2; j++) {
+				System.out.print(arr[i][j] + " ");
+			}
+			System.out.println();
+		}
+
+		in.close();
 	}
+
 }
