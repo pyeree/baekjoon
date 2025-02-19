@@ -1,38 +1,36 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
-import java.util.Arrays;
 
 public class Main {
+	static Integer[] dp;
+
+	public static int recru(int n) {
+
+		if (dp[n] == null) {
+			if (n % 6 == 0) {
+				dp[n] = Math.min(recru(n - 1), Math.min(recru(n / 2), recru(n / 3))) + 1;
+			} else if (n % 3 == 0) {
+				dp[n] = Math.min(recru(n / 3), recru(n - 1)) + 1;
+			} else if (n % 2 == 0) {
+				dp[n] = Math.min(recru(n / 2), recru(n - 1)) + 1;
+			} else {
+				dp[n] = recru(n - 1) + 1;
+			}
+		}
+
+		return dp[n];
+	}
+
 	public static void main(String[] args) throws IOException {
 		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 
 		int n = Integer.parseInt(in.readLine());
-		int[][] arr = new int[n][2];
-		for (int i = 0; i < n; i++) {
-			StringTokenizer sb = new StringTokenizer(in.readLine());
-			for (int j = 0; j < 2; j++) {
-				arr[i][j] = Integer.parseInt(sb.nextToken());
-			}
-		}
 
-		System.out.println("null");
-		Arrays.sort(arr, (a, b) -> {
-			if (a[0] == b[0])
-				return a[1] - b[1];
-			return a[0] - b[0];
-		});
+		dp = new Integer[n + 1];
+		dp[0] = dp[1] = 0;
 
-		for (int i = 0; i < n; i++) {
-			for (int j = 0; j < 2; j++) {
-				System.out.print(arr[i][j] + " ");
-			}
-			System.out.println();
-		}
+		System.out.println(recru(n));
 
-		in.close();
 	}
-
 }
